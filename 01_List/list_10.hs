@@ -11,8 +11,6 @@ Example in Haskell:
 [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
 -}
 
-import Data.Maybe
-
 encode :: Eq a => [a] -> [(Int, a)]
 encode [] = []
 encode (x:xs) = encode' 1 x xs
