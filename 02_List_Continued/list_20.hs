@@ -18,3 +18,16 @@ Example in Haskell:
 ('b',"acd")
 
 -}
+
+
+removeAt :: (Eq a) => Int -> [a] -> (Maybe a, [a])
+removeAt _ [] = (Nothing,[])
+removeAt k (x:xs)
+    | k == 1 = (
+            Just x,
+            snd (removeAt (k-1) xs)
+        )
+    | otherwise = (
+            fst (removeAt (k-1) xs),
+            x:snd (removeAt (k-1) xs)
+        )

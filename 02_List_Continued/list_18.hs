@@ -14,3 +14,11 @@ Example in Haskell:
 
 -}
 
+
+slice :: (Eq a) => [a] -> Int -> Int -> [a]
+slice [] _ _ = []
+slice (x:xs) s e = slice' (x:xs) s e 1
+    where slice' [] _ _ _ = []
+          slice' (x:xs) s e counter
+            | s <= counter && counter <= e = x:slice' xs s e (counter+1)
+            | otherwise = slice' xs s e (counter+1)

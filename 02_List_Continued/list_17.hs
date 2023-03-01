@@ -14,10 +14,16 @@ Example in Haskell:
 
 -}
 
-split :: (Eq a) => [a] -> Int -> [[a]]
-split [] _ = [[]]
+split :: (Eq a) => [a] -> Int -> ([a],[a])
+split [] _ = ([],[])
 split (x:xs) k = split' (x:xs) k 1
-    where split' [] _ _ = [[]]
+    where split' [] _ _ = ([], [])
           split' (x:xs) k counter 
-            | k /= counter = x:(head (split' xs k (counter+1)))
-            | k == counter = [x]:(split' xs k (counter+1))
+            | counter <= k = (
+                    x:fst (split' xs k (counter+1)), 
+                    snd (split' xs k (counter+1))
+                )
+            | otherwise = (
+                    fst (split' xs k (counter+1)),
+                    x:snd (split' xs k (counter+1))
+                )

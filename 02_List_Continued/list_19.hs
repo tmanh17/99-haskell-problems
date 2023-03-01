@@ -20,3 +20,12 @@ Examples in Haskell:
 
 -}
 
+
+
+rotate :: (Eq a) => [a] -> Int -> [a]
+rotate [] _ = []
+rotate xs n = (restPart' xs (mod n $ length xs)) ++ (take (mod n $ length xs) xs) 
+    where restPart' [] _ = []
+          restPart' (x:xs) n 
+            | n >= 1 = (restPart' xs (n-1))
+            | otherwise = x:(restPart' xs (n-1))
