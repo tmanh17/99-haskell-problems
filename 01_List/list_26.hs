@@ -14,5 +14,3 @@ Example in Haskell:
 
 -}
 
-
-
