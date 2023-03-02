@@ -38,3 +38,24 @@ False True  False False
 False False True  False
 False False False False
 -}
+
+
+import Control.Monad (replicateM)
+
+and',or',nor',nand',xor',impl',equ' :: Bool -> Bool -> Bool
+
+and'  a b = a && b
+or'   a b = a || b
+nand' a b = not (and' a b)
+nor'  a b = not (or' a b)
+xor'  a b = not (equ' a b)
+impl' a b = or' (not a) b
+equ'  a b = a == b
+not' a = not a
+
+tablen :: Int -> ([Bool] -> Bool) -> IO ()
+tablen n f = mapM_ putStrLn [toStr a ++ " => " ++ show (f a) | a <- args n]
+    where args n = replicateM n [True, False]
+          toStr = unwords . map (\x -> show x ++ space x)
+          space True = "  "
+          space False = " "

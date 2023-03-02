@@ -16,3 +16,12 @@ Example in Haskell:
 λ> gray 3
 ["000","001","011","010","110","111","101","100"]
 -}
+import Control.Monad (replicateM)
+
+gray :: Int -> [String]
+gray n = replicateM n ['0','1']
+
+gray' :: Int -> [String]
+gray' 0 = [""]
+gray' n = let xs = gray' (n-1) in map ('0':) xs ++ map ('1':) xs
+

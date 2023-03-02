@@ -11,9 +11,12 @@ Example in Haskell:
 True
 -}
 
-check :: Int -> Int -> Bool
-check n x = mod n x == 0 
+-- check :: Int -> Int -> Bool
+-- check n x = mod n x == 0 
+
+
+check = \n x -> mod n x == 0
 
 isPrime :: Int -> Bool
 isPrime 1 = False
-isPrime n =not(any (check n) [2..(floor $ sqrt $ fromIntegral n)])
+isPrime n =not(any ((\n x -> mod n x == 0) n) [2..(floor $ sqrt $ fromIntegral n)])
