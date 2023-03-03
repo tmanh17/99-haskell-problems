@@ -14,3 +14,34 @@ Example in Haskell:
 
 -}
 
+import Data.List (tails)
+
+
+combinations :: Int -> [a] -> [[a]]
+combinations 0 _ = [[]]
+combinations _ [] = []
+combinations n (x:xs) = (map (x:) (combinations (n-1) xs)) ++ (combinations n xs)
+
+
+-- Using list comprehensions
+combinations' :: Int -> [a] -> [[a]]
+combinations' 0 _  = [ [] ]
+combinations' n xs = [ y:ys | y:xs' <- tails xs
+                           , ys <- combinations' (n-1) xs']
+
+-- Alternate syntax, using 'do'-notation 
+combinations'' :: Int -> [a] -> [[a]]
+combinations'' 0 _  = return []
+combinations'' n xs = 
+    do 
+        y:xs' <- tails xs
+        ys <- combinations'' (n-1) xs'
+        return (y:ys)
+
+
+combinations''' :: Int -> [a] -> [[a]]
+combinations''' _ [] = [[]]
+combinations''' 0 _  = [[]]
+combinations''' k (x:xs) = x_start ++ others
+    where x_start = [ x : rest | rest <- combinations''' (k-1) xs ]
+          others  = if k <= length xs then combinations''' k xs else []
