@@ -23,6 +23,23 @@ Example in Haskell:
 ["ijkl","o","abc","fgh","de","de","mn"]
 
 -}
+import Data.List;
+
+
+lsort :: (Eq a) => [[a]] -> [[a]]
+lsort [] = []
+lsort [x] = [x]
+lsort (x:xs) =  lower ++ [x] ++ higher
+    where 
+        lower = lsort(filter ((\a b -> (length a) > (length b)) x) xs)
+        higher = lsort(filter((\a b -> (length a) <= (length b)) x) xs)
 
 
 
+lsort' :: [[a]] -> [[a]]
+lsort' = sortBy (\xs ys -> compare (length xs) (length ys))
+
+frequency len l = length (filter (\x -> length x == len) l)
+
+lfsort :: [[a]] -> [[a]]
+lfsort l = sortBy (\xs ys -> compare (frequency (length xs) l) (frequency (length ys) l)) l
