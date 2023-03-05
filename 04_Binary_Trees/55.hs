@@ -55,3 +55,29 @@ Branch 'x' (Branch 'x' (Branch 'x' Empty Empty)
            (Branch 'x' Empty Empty)
 ]
 -}
+
+
+data Tree a = Empty | Branch a (Tree a) (Tree a)
+              deriving (Show, Eq)
+
+leaf x = Branch x Empty Empty
+
+cbalTree :: Int -> [Tree Char]
+cbalTree 0 = []
+
+cbalTree 0 = [Empty]
+cbalTree 1 = [leaf 'x']
+cbalTree n = if n `mod` 2 == 1 then 
+             [ Branch 'x' l r | l <- cbalTree ((n - 1) `div` 2), 
+                                r <- cbalTree ((n - 1) `div` 2) ] 
+             else 
+             concat [ [Branch 'x' l r, Branch 'x' r l] | l <- cbalTree ((n - 1) `div` 2), 
+                                                         r <- cbalTree (n `div` 2) ]
+
+
+cbalTree' :: Int -> [Tree Char]
+cbalTree' 0 = [Empty]
+cbalTree' n = let (q, r) = (n - 1) `quotRem` 2
+    in [Branch 'x' left right | i     <- [q .. q + r],
+                                left  <- cbalTree' i,
+                                right <- cbalTree' (n - i - 1)]

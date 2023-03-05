@@ -14,3 +14,8 @@ Haskell's type system ensures that all terms of type Tree a are binary trees: it
 
 
 -}
+
+data Tree a = Empty | Branch a (Tree a) (Tree a)
+              deriving (Show, Eq)
+
+leaf x = Branch x Empty Empty
