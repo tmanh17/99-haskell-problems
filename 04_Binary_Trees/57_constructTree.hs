@@ -27,3 +27,24 @@ True
 
 import Tree
 
+mirror Empty          Empty          = True
+mirror (Branch _ a b) (Branch _ x y) = mirror a y && mirror b x
+mirror _              _              = False
+
+symmetric Empty          = True
+symmetric (Branch _ l r) = mirror l r
+    where
+        mirror Empty Empty = True
+        mirror (Branch _ a b) (Branch _ x y) = mirror a y && mirror b x
+        mirror _ _ = False
+
+construct :: (Ord a) => [a] -> Tree a
+construct [] = Empty
+construct xs = foldl (flip addNode) Empty xs
+    where 
+        addNode x Empty = Branch x (Empty) (Empty)
+        addNode x manhdt@(Branch y l r) = case compare x y of
+            GT -> Branch y l (addNode x r) 
+            LT -> Branch y (addNode x l) r
+            EQ -> manhdt
+
