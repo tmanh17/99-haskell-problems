@@ -9,3 +9,17 @@ False
 λ> symmetric (Branch 'x' (Branch 'x' Empty Empty) (Branch 'x' Empty Empty))
 True
 -}
+
+
+import Tree
+
+mirror Empty          Empty          = True
+mirror (Branch _ a b) (Branch _ x y) = mirror a y && mirror b x
+mirror _              _              = False
+
+symmetric Empty          = True
+symmetric (Branch _ l r) = mirror l r
+    where
+        mirror Empty Empty = True
+        mirror (Branch _ a b) (Branch _ x y) = mirror a y && mirror b x
+        mirror _ _ = False
