@@ -48,3 +48,13 @@ construct xs = foldl (flip addNode) Empty xs
             LT -> Branch y (addNode x l) r
             EQ -> manhdt
 
+
+construct' :: (Ord a) => [a] -> Tree a
+construct' [] = Empty
+construct' xs = foldl (addNode) Empty xs
+    where 
+        addNode Empty x = Branch x (Empty) (Empty)
+        addNode manhdt@(Branch y l r) x = case compare x y of
+            GT -> Branch y l (addNode r x) 
+            LT -> Branch y (addNode l x) r
+            EQ -> manhdt
