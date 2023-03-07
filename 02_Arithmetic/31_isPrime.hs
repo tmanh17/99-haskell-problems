@@ -15,8 +15,7 @@ True
 -- check n x = mod n x == 0 
 
 
-check = \n x -> mod n x == 0
-
-isPrime :: Int -> Bool
-isPrime 1 = False
-isPrime n =not(any ((\n x -> mod n x == 0) n) [2..(floor $ sqrt $ fromIntegral n)])
+isPrime :: Integer -> Bool
+isPrime n 
+  | n <= 1 = False
+  | otherwise = not(any ((\n x -> mod n x == 0) n) [2..(floor $ sqrt $ fromIntegral n)])
