@@ -10,3 +10,16 @@ Example in Haskell:
 λ> ipl tree4
 2
 -}
+
+
+import Tree
+
+ipl :: (Tree Char) -> Int
+ipl t = ipl' t 1
+    where 
+        ipl' (Node _ []) 0 = 0
+        ipl' (Node _ xs) n = n * (length xs) + sum [ipl' x (n+1) | x <- xs]
+
+ipl' :: Tree a -> Int
+ipl' = ipl'' 0
+  where ipl'' d (Node _ ts) = d + sum (map (ipl'' (d+1)) ts)

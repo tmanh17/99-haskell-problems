@@ -11,3 +11,13 @@ Example in Haskell:
 λ> internals tree4
 [1,2]
 -}
+
+import Tree
+
+tree4 = Branch 1 (Branch 2 Empty (Branch 4 Empty Empty))
+                 (Branch 2 Empty Empty)
+
+internals :: (Tree Integer) -> [Integer]
+internals (Empty) = []
+internals (Branch x Empty Empty) = []
+internals (Branch x l r) = [x] ++ (internals l) ++ (internals r)

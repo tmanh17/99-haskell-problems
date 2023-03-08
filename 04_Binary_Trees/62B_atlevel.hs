@@ -11,3 +11,13 @@ Example in Haskell:
 λ> atLevel tree4 2
 [2,2]
 -}
+
+import Tree
+
+tree4 = Branch 1 (Branch 2 Empty (Branch 4 Empty Empty))
+                 (Branch 2 Empty Empty)
+
+atLevel :: (Tree Integer) -> Int -> [Integer]
+atLevel (Empty) _ = []
+atLevel (Branch x _ _) 1 = [x]
+atLevel (Branch x l r) n = (atLevel l (n-1)) ++ (atLevel r (n-1))

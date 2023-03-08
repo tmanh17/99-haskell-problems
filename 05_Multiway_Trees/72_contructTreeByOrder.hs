@@ -8,3 +8,7 @@ Example in Haskell:
 λ> bottom_up tree5
 "gfcdeba"
 -}
+
+bottom_up :: (Tree Char) -> [Char]
+bottom_up :: (Node x []) = [x]
+bottom_up :: (Node x ts) = x:[bottom_up t | t <- ts]
