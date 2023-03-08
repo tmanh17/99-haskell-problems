@@ -31,5 +31,8 @@ Example in Haskell:
 
 -}
 
-
+group :: [Int] -> [String] -> [[String]]
+group _ [] = [[]]
+group (n:ns) (x:xs)
+    | n > 0 = [map (x:) group (n-1) xs | x <- xs]
 
