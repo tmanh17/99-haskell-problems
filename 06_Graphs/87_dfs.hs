@@ -8,3 +8,20 @@ Example in Haskell:
 λ> depthFirst ([1,2,3,4,5,6,7], [(1,2),(2,3),(1,4),(3,4),(5,2),(5,4),(6,7)]) 1
 [1,2,3,4,5]
 -}
+
+type Node = Int
+type Edge = (Node,Node)
+type Graph = ([Node],[Edge])
+
+dfs :: Graph -> Node -> [Node]
+dfs (nodes, edges) c = dfs' (nodes, edges) [c]
+    where 
+        dfs' ([],_) _ = []
+        dfs' (_,_) [] = []
+        dfs' (nodes, edges) (top:stack)
+            | [x|x<-nodes, x==top] == [] = dfs' (newNodes, edges) stack
+            | otherwise = top : dfs' (newNodes, edges) (adjacent ++ stack)
+                where
+                    adjacent = [x | (x,y)<-edges,y==top] ++ [x | (y,x)<-edges,y==top]
+                    newNodes = [x|x<-nodes, x/=top]
+
