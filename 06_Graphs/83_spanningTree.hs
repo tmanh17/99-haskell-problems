@@ -10,3 +10,10 @@ Example in Haskell:
 λ> length $ spanningTree k4
 16
 -}
+
+data Graph a = Graph [a] [(a, a)]
+               deriving (Show, Eq)
+
+k4 = Graph ['a', 'b', 'c', 'd']
+     [('a', 'b'), ('b', 'c'), ('c', 'd'), ('d', 'a'), ('a', 'c'), ('b', 'd')]
+ 
