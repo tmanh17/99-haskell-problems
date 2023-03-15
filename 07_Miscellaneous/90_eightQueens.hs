@@ -12,3 +12,24 @@ Example in Haskell:
 λ> head (queens 8)
 [1,5,8,6,3,7,2,4]
 -}
+
+
+import Data.List
+
+queens :: Int -> [[Int]]
+queens 0 = []
+queens n = queens' n 1 [] [] []
+    where 
+        queens' n i cols leftRight rightLeft 
+            | i == (n+1) = [[]]
+            | otherwise = [x:rest | x <- [1..n] \\ cols, rest <- queens' n (i+1) (x:cols) ((i+x):leftRight) ((i-x):rightLeft), not $ (i+x) `elem` leftRight, not $ (i-x) `elem` rightLeft]
+
+
+queens' :: Int -> [[Int]]
+queens' n = filter test (generate n)
+    where generate 0      = [[]]
+          generate k      = [q : qs | q <- [1..n], qs <- generate (k-1)]
+          test []         = True
+          test (q:qs)     = isSafe q qs && test qs
+          isSafe   try qs = not (try `elem` qs || sameDiag try qs)
+          sameDiag try qs = any (\(colDist,q) -> abs (try - q) == colDist) $ zip [1..] qs
