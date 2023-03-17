@@ -17,3 +17,14 @@ False
 λ> identifier "two--hyphens" 
 False
 -}
+
+import Data.Char
+
+identifier :: [Char] -> Bool
+identifier (x:xs) = isLetter x &&  loop xs
+    where
+        loop [] = True 
+        loop (y:ys)
+            | y == '-' = (not . null) ys && isAlphaNum (head ys) && loop (tail ys)
+            | isAlphaNum y = loop (ys)
+            | otherwise = False
